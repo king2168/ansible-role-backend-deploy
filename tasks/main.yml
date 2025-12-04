@@ -1,7 +1,7 @@
 ---
 - name: Ensure '{{ deployment_workdir }}' exists
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.file:
     path: "{{ deployment_workdir }}"
     state: directory
@@ -9,7 +9,7 @@
 
 - name: Download New Relic agent
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.unarchive:
     src: "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/{{ deployment_newrelic_version }}/newrelic-java.zip"
     dest: /tmp
@@ -20,7 +20,7 @@
 
 - name: ensure {{ deployment_newrelic_dir }} exist
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.file:
     path: "{{ deployment_newrelic_dir }}"
     state: directory
@@ -28,7 +28,7 @@
 
 - name: Install New Relic agent
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.copy:
     src: /tmp/newrelic/newrelic.jar
     dest: "{{ deployment_newrelic_dir }}/newrelic.jar"
@@ -40,7 +40,7 @@
 
 - name: Transfer an artifact to the remote server
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.copy:
     src: "{{ deployment_artifact }}"
     dest: "{{ deployment_workdir }}/app.jar"
@@ -51,7 +51,7 @@
 
 - name: Setup environment variables
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.template:
     src: env.j2
     dest: "{{ deployment_workdir }}/.env"
@@ -62,7 +62,7 @@
 
 - name: Create systemd service
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.template:
     src: systemd.service.j2
     dest: "/etc/systemd/system/{{ deployment_service }}.service"
@@ -73,7 +73,7 @@
 
 - name: Ensure systemd service is started and enabled
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3.9
   ansible.builtin.systemd:
     name: "{{ deployment_service }}"
     state: started
