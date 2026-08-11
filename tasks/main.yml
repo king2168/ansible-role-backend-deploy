@@ -71,6 +71,8 @@
     mode: 0644
   notify: restart_app
 
+- ansible.builtin.meta: flush_handlers
+
 - name: Ensure systemd service is started and enabled
   vars:
     ansible_python_interpreter: /usr/bin/python3
